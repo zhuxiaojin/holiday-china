@@ -1,0 +1,26 @@
+{
+    "name": "zhuxiaojin/holiday-china",
+    "description": "中国法定节假日判断",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhuxiaojin",
+            "email": "qhj1989@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Zhuxiaojin\\HolidayChina\\": "./src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zhuxiaojin\\HolidayChina\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
