@@ -5,7 +5,7 @@
 ## 安装
 
 ```shell
-$ composer require zhuxiaojin/holiday-china -vvv
+$ composer require zhuxiaojin/holiday-china  
 ```
 
 ## 使用
