@@ -34,7 +34,7 @@ $response=$holiday->holidayData('2018-10-09');
 #### 服务调用
 ``` 
 public function edit(){
-$response=app('holiday')->holidayDataList('2018-09-10');
+$response=app('holiday')->holidayDataList(['2018-09-10']);
 }
 ```
 ## 返回值
