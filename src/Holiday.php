@@ -15,24 +15,21 @@ use Zhuxiaojin\HolidayChina\Exceptions\InvalidArgumentException;
  */
 class Holiday
 {
-    const URL = 'http://api.goseek.cn/Tools/holiday';
 
-    public function holidayData($date=false) {
+    /**
+     * @name:holidayData 查询某一天的数据
+     * @param bool $date
+     * @return mixed
+     * @author:Storm 朱晓进 <qhj1989@qq.com>
+     * @throws \HttpException
+     */
+    public function holidayData($date = false) {
+        $url = 'http://timor.tech/api/holiday/info/';
         if (empty($date)) {
-            $date = date('Ymd');
+            $date = date('Y-m-d');
         }
-        $date = intval($date);
-        //  检测时间长度
-        if (strlen($date) != 8) {
-            throw new InvalidArgumentException("不是一个有效的参数:" . $date);
-        }
-        $query = array_filter([
-            'date' => $date
-        ]);
         try {
-            $response = $this->getHttpClient()->get(self::URL, [
-                'query' => $query
-            ])->getBody()->getContents();
+            $response = $this->getHttpClient()->get($url . $date)->getBody()->getContents();
             return json_decode($response);
         } catch (Exception $e) {
             throw new \HttpException($e->getMessage(), $e->getCode(), $e);
@@ -40,6 +37,35 @@ class Holiday
 
     }
 
+    /**
+     * @name:holidayDataList  查询多天数据
+     * @param array $days
+     * @return mixed
+     * @author:Storm 朱晓进 <qhj1989@qq.com>
+     * @throws InvalidArgumentException
+     * @throws \HttpException
+     */
+    public function holidayDataList($days = []) {
+        $url = 'http://timor.tech/api/holiday/batch';
+        if (!is_array($days)) {
+            throw new InvalidArgumentException('请返回数组类型参数:' . $days);
+        }
+        $query = array_filter([
+            'd' => implode(',', $days)]);
+
+        try {
+            $response = $this->getHttpClient()->get($url, ['query' => $query])->getBody()->getContents();
+            return json_decode($response);
+        } catch (Exception $e) {
+            throw new \HttpException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @name:getHttpClient  guzzle
+     * @return Client
+     * @author:Storm 朱晓进 <qhj1989@qq.com>
+     */
     public function getHttpClient() {
         return new Client();
     }
